@@ -16,7 +16,7 @@ def parse_execute_memred(mr: MemRed, line: str):
             return retv
     elif line_parts[0] == 'NUMEQUALTO':
             if len(line_parts) == 2:
-                return mr.num_equal_to(line_parts[1])
+                return str(mr.num_equal_to(line_parts[1]))
     elif line_parts[0] == 'UNSET':
         if len(line_parts) == 2:
             mr.unset(line_parts[1])
