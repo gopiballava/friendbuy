@@ -1,8 +1,5 @@
 from collections import defaultdict
 
-class AttemptedDecrementZeroValue(Exception):
-    """We should not be attempting to decrement a value that is not stored."""
-    pass
 
 class ValueCounter:
     def __init__(self):
@@ -14,15 +11,15 @@ class ValueCounter:
 
     def increment_value(self, value: str):
         """Increment our count of 'value' by one"""
-        self._value_dict[value] += 1
+        new_count = self._value_dict[value] + 1
+        if new_count == 0:
+            del self._value_dict[value]
+        else:
+            self._value_dict[value] = new_count
 
     def decrement_value(self, value: str):
-        if value in self._value_dict:
-            old_count = self._value_dict[value]
-            if old_count > 1:
-                self._value_dict[value] = old_count - 1
-            else:
-                # Don't clutter the system with empty values
-                del self._value_dict[value]
+        new_count = self._value_dict[value] - 1
+        if new_count == 0:
+            del self._value_dict[value]
         else:
-            raise AttemptedDecrementZeroValue(value)
+            self._value_dict[value] = new_count
